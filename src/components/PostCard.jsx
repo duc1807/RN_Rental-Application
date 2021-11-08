@@ -34,6 +34,9 @@ const PostCard = ({ post, index, navigation }) => {
             <Text style={[styles.contentText]}>
               Furniture: {post.furnitureType || 'None'}
             </Text>
+            <Text style={[styles.contentText]}>
+              Created at: {post.createdAt || 'None'}
+            </Text>
           </View>
 
           <View style={styles.rightContent}>

@@ -6,6 +6,7 @@ export const createPostTable = async (db) => {
   const query = `CREATE TABLE IF NOT EXISTS ${tableName}(
         _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         type TEXT NOT NULL,
+        createdAt TEXT NOT NULL,
         bedroom INTERGER NOT NULL,
         rentPrice INTERGER NOT NULL,
         furnitureType TEXT,
@@ -36,9 +37,10 @@ export const getPost = (db) => {
 export const savePost = async (db, post) => {
   db.transaction((tx) => {
     tx.executeSql(
-      `INSERT INTO ${tableName}(type, bedroom, rentPrice, furnitureType ,notes, reporter) values (?,?,?,?,?,?)`,
+      `INSERT INTO ${tableName}(type, createdAt, bedroom, rentPrice, furnitureType, notes, reporter) values (?,?,?,?,?,?,?)`,
       [
         post.type,
+        post.createdAt,
         post.bedroom,
         post.rentPrice,
         post.furnitureType,
@@ -70,8 +72,15 @@ export const getPostById = async (db, id) => {
 }
 
 export const updatePost = async (db, id, newPostData) => {
-  const { type, bedroom, rentPrice, furnitureType, notes, reporter } =
-    newPostData
+  const {
+    type,
+    bedroom,
+    createdAt,
+    rentPrice,
+    furnitureType,
+    notes,
+    reporter,
+  } = newPostData
 
   db.transaction((tx) => {
     tx.executeSql(
@@ -79,6 +88,7 @@ export const updatePost = async (db, id, newPostData) => {
       UPDATE ${tableName}
       SET
         type = '${type}',
+        createdAt = '${createdAt}',
         bedroom = ${bedroom},
         rentPrice = ${rentPrice},
         furnitureType = '${furnitureType}',
@@ -114,6 +124,7 @@ export const deletePostTable = async (db) => {
 
     db.transaction((tx) => {
       tx.executeSql(query, [], (tx, result) => {
+        console.log('Delete table: ', tableName)
         res(result)
       })
     }),

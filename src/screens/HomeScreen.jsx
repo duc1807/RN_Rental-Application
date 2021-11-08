@@ -17,7 +17,7 @@ import SlideupModal from '../components/SlideupModal'
 import { Picker } from '@react-native-picker/picker'
 import { getDBConnection } from '../services/dbService'
 import { createCategoryTable, getCategory } from '../services/categoryService'
-import { createPostTable, getPost, savePost } from '../services/postService'
+import { createPostTable, deletePostTable, getPost, savePost } from '../services/postService'
 import PostCard from '../components/PostCard'
 import { useIsFocused } from '@react-navigation/native'
 import PopupModal from '../components/modals/PopupModal'
@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation }) => {
     try {
       const db = await getDBConnection()
 
-      // deletePostTable(db)
+      // await deletePostTable(db)
 
       await createPostTable(db)
 
@@ -147,6 +147,7 @@ const HomeScreen = ({ navigation }) => {
         <Formik
           validationSchema={addApartmentValidator}
           initialValues={{
+            createdAt: '',
             bedroom: 1,
             rentPrice: 1,
             notes: '',
@@ -254,6 +255,21 @@ const HomeScreen = ({ navigation }) => {
                     }
                   </Text>
                 </TouchableOpacity>
+
+                <Text style={[styles.label, { marginTop: 5 }]}>Created at</Text>
+                <TextInput
+                  name="notes"
+                  placeholder="DD-MM-YYYY"
+                  style={styles.textInput}
+                  onChangeText={handleChange('createdAt')}
+                  // onBlur={handleBlur('password')}
+                  value={values.createdAt}
+                />
+                {errors.createdAt && (
+                  <Text style={{ fontSize: 10, color: 'red' }}>
+                    {errors.createdAt}
+                  </Text>
+                )}
 
                 <Text style={[styles.label, { marginTop: 5 }]}>Notes</Text>
                 <TextInput

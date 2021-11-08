@@ -42,7 +42,6 @@ const PostDetail = ({ route, navigation }) => {
 
       if (_categories?.length) {
         setCategories(_categories)
-        setSelectedType(_categories[0]._id)
       }
     } catch (error) {
       console.error(error)
@@ -64,6 +63,7 @@ const PostDetail = ({ route, navigation }) => {
   }, [])
 
   useEffect(() => {
+    setSelectedType(post?.type || categories?.[0]?.name)
     setSelectedFurniture(post?.furnitureType || furnitureTypes[0].name)
   }, [post])
 
@@ -82,7 +82,7 @@ const PostDetail = ({ route, navigation }) => {
 
   const onUpdatePost = async (values) => {
     const newPost = {
-      type: categories.find((item) => item._id === selectedType).name,
+      type: categories?.find((item) => item.name === selectedType).name,
       furnitureType: furnitureTypes.find(
         (item) => item.name === selectedFurniture
       ).name,
@@ -123,6 +123,9 @@ const PostDetail = ({ route, navigation }) => {
             </Text>
             <Text style={[styles.contentText]}>
               Furniture: {post?.furnitureType || 'None'}
+            </Text>
+            <Text style={[styles.contentText]}>
+              Created at: {post?.createdAt || 'None'}
             </Text>
           </View>
 
@@ -197,8 +200,9 @@ const PostDetail = ({ route, navigation }) => {
         <Formik
           validationSchema={addApartmentValidator}
           initialValues={{
-            bedroom: post?.bedroom,
-            rentPrice: post?.rentPrice,
+            createdAt: post?.createdAt || '',
+            bedroom: post?.bedroom || 1,
+            rentPrice: post?.rentPrice || 1,
             notes: post?.notes || '',
             reporter: post?.reporter,
           }}
@@ -227,7 +231,7 @@ const PostDetail = ({ route, navigation }) => {
                     placeholder="Apartment type"
                     style={styles.textInput}
                   >
-                    {categories.find((item) => item._id === selectedType)?.name}
+                    {selectedType}
                   </Text>
                 </TouchableOpacity>
 
@@ -294,6 +298,20 @@ const PostDetail = ({ route, navigation }) => {
                   </Text>
                 </TouchableOpacity>
 
+                <Text style={[styles.label, { marginTop: 5 }]}>Created at</Text>
+                <TextInput
+                  name="notes"
+                  placeholder="DD-MM-YYYY"
+                  style={styles.textInput}
+                  onChangeText={handleChange('createdAt')}
+                  value={values.createdAt}
+                />
+                {errors.createdAt && (
+                  <Text style={{ fontSize: 10, color: 'red' }}>
+                    {errors.createdAt}
+                  </Text>
+                )}
+
                 <Text style={[styles.label, { marginTop: 5 }]}>Notes</Text>
                 <TextInput
                   name="notes"
@@ -356,7 +374,7 @@ const PostDetail = ({ route, navigation }) => {
                     <Picker.Item
                       key={index}
                       label={item.name}
-                      value={item._id}
+                      value={item.name}
                     />
                   ))}
                 </Picker>

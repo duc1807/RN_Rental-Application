@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 
 export const addApartmentValidator = yup.object().shape({
-  // type: yup.string().required('Apartment type is Required'),
+  createdAt: yup.string().required('Created at is required'),
   bedroom: yup
     .number()
     .min(1, ({ min }) => `Bedroom number must be at least ${min}`)
@@ -14,6 +14,7 @@ export const addApartmentValidator = yup.object().shape({
     .required('Rent price is required'),
   reporter: yup.string().required('Reporter is Required'),
 })
+
 export const addCategoryValidator = yup.object().shape({
   name: yup.string().required('Category name is Required'),
 })
