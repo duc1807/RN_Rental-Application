@@ -13,7 +13,6 @@ import { Ionicons } from '@expo/vector-icons'
 import { Field, Form, Formik } from 'formik'
 import { FlatList, TextInput } from 'react-native-gesture-handler'
 import { addApartmentValidator } from '../services/validationSchema'
-import SlideupModal from '../components/SlideupModal'
 import { Picker } from '@react-native-picker/picker'
 import { getDBConnection } from '../services/dbService'
 import { createCategoryTable, getCategory } from '../services/categoryService'
@@ -21,6 +20,7 @@ import { createPostTable, deletePostTable, getPost, savePost } from '../services
 import PostCard from '../components/PostCard'
 import { useIsFocused } from '@react-navigation/native'
 import PopupModal from '../components/modals/PopupModal'
+import SlideupModal from '../components/modals/SlideupModal'
 
 export const furnitureTypes = [
   {

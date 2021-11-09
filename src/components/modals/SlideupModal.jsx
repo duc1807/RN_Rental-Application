@@ -9,8 +9,6 @@ import {
   View,
   Keyboard,
 } from 'react-native'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import { getCategory } from '../services/categoryService'
 
 const SlideupModal = ({
   isShow,

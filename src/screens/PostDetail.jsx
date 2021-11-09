@@ -16,9 +16,9 @@ import { deletePost, getPostById, updatePost } from '../services/postService'
 import { Field, Form, Formik } from 'formik'
 import { addApartmentValidator } from '../services/validationSchema'
 import { createCategoryTable, getCategory } from '../services/categoryService'
-import SlideupModal from '../components/SlideupModal'
 import { Picker } from '@react-native-picker/picker'
 import { furnitureTypes } from './HomeScreen'
+import SlideupModal from '../components/modals/SlideupModal'
 
 const PostDetail = ({ route, navigation }) => {
   const { postId, index } = route.params

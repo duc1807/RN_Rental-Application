@@ -12,7 +12,7 @@ import {
 
 const ConfirmModal = ({ isShow, setShow, content, onOk, okCancel, title }) => {
   const handleOnDelete = () => {
-    onOk()
+    onOk && onOk()
     setShow(false)
   }
 
