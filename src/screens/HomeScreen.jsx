@@ -90,6 +90,7 @@ const HomeScreen = ({ navigation }) => {
     if (isFocused) {
       fetchData()
       loadDataCallback()
+      setSearchKey('')
       setSelectedFurniture(furnitureTypes[0].name)
     }
   }, [isFocused])
