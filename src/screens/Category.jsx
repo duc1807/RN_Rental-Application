@@ -20,7 +20,7 @@ import {
 import {
   addCategoryValidator,
   loginValidationSchema,
-} from '../services/validationSchema'
+} from '../utils/validationSchema'
 import { v4 as uuid } from 'uuid'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { getDBConnection } from '../services/dbService'
