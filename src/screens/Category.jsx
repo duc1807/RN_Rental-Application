@@ -91,7 +91,7 @@ const Category = () => {
         isShow={addModalShow}
         setShow={setAddModalShow}
         modalContentStyle={styles.modalContent}
-        title="Add new apartment for rent"
+        title="Add new property type"
       >
         <Formik
           validationSchema={addCategoryValidator}

@@ -84,7 +84,7 @@ const CategoryCard = ({ category, loadDataCallback }) => {
         isShow={deleteModalShow}
         setShow={setDeleteModalShow}
         title="Delete category"
-        content={`Do you want to delete category ${category?.name}?`}
+        content={`Do you want to delete property ${category?.name}?`}
         onOk={onDeleteCategory}
       />
 
