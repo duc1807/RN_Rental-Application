@@ -16,7 +16,12 @@ import { addApartmentValidator } from '../utils/validationSchema'
 import { Picker } from '@react-native-picker/picker'
 import { getDBConnection } from '../services/dbService'
 import { createCategoryTable, getCategory } from '../services/categoryService'
-import { createPostTable, deletePostTable, getPost, savePost } from '../services/postService'
+import {
+  createPostTable,
+  deletePostTable,
+  getPost,
+  savePost,
+} from '../services/postService'
 import PostCard from '../components/PostCard'
 import { useIsFocused } from '@react-navigation/native'
 import PopupModal from '../components/modals/PopupModal'
@@ -114,12 +119,18 @@ const HomeScreen = ({ navigation }) => {
   const onAddPost = async (values) => {
     const newPost = {
       type: categories.find((item) => item._id === selectedType).name,
-      furnitureType: furnitureTypes.find((item) => item.name === selectedFurniture).name,
+      furnitureType: furnitureTypes.find(
+        (item) => item.name === selectedFurniture
+      ).name,
       ...values,
     }
     try {
       const db = await getDBConnection()
-      await savePost(db, newPost)
+      const addedPost = await savePost(db, newPost)
+      navigation.navigate('PostDetail', {
+        postId: addedPost.insertId,
+        index: addedPost.insertId,
+      })
     } catch (err) {
       console.log('ERR: ', err)
     } finally {
@@ -242,7 +253,9 @@ const HomeScreen = ({ navigation }) => {
                 )} */}
 
                 <TouchableOpacity onPress={() => setFurnitureModalShow(true)}>
-                  <Text style={[styles.label, { marginTop: 5 }]}>Furniture</Text>
+                  <Text style={[styles.label, { marginTop: 5 }]}>
+                    Furniture
+                  </Text>
                   <Text
                     disabled
                     name="type"

@@ -35,23 +35,28 @@ export const getPost = (db) => {
 }
 
 export const savePost = async (db, post) => {
-  db.transaction((tx) => {
-    tx.executeSql(
-      `INSERT INTO ${tableName}(type, createdAt, bedroom, rentPrice, furnitureType, notes, reporter) values (?,?,?,?,?,?,?)`,
-      [
-        post.type,
-        post.createdAt,
-        post.bedroom,
-        post.rentPrice,
-        post.furnitureType,
-        post.notes,
-        post.reporter,
-      ],
-      (txObj, resultSet) => {
-        return resultSet
-      },
-      (txObj, error) => console.log('Error', error)
-    )
+  return new Promise((res, rej) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `INSERT INTO ${tableName}(type, createdAt, bedroom, rentPrice, furnitureType, notes, reporter) values (?,?,?,?,?,?,?)`,
+        [
+          post.type,
+          post.createdAt,
+          post.bedroom,
+          post.rentPrice,
+          post.furnitureType,
+          post.notes,
+          post.reporter,
+        ],
+        (txObj, resultSet) => {
+          res(resultSet)
+        },
+        (txObj, error) => {
+          console.log('Error', error)
+          rej(error)
+        }
+      )
+    })
   })
 }
 
