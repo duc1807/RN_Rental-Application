@@ -1,8 +1,7 @@
 const tableName = 'post'
 
 export const createPostTable = async (db) => {
-  console.log('CREATE POST TABLE')
-  // create table if not exists
+  // Create table if not exists
   const query = `CREATE TABLE IF NOT EXISTS ${tableName}(
         _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         type TEXT NOT NULL,
@@ -38,7 +37,10 @@ export const savePost = async (db, post) => {
   return new Promise((res, rej) => {
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO ${tableName}(type, createdAt, bedroom, rentPrice, furnitureType, notes, reporter) values (?,?,?,?,?,?,?)`,
+        `INSERT INTO ${tableName}
+          (type, createdAt, bedroom, rentPrice, 
+          furnitureType, notes, reporter) 
+          values (?,?,?,?,?,?,?)`,
         [
           post.type,
           post.createdAt,
@@ -52,7 +54,6 @@ export const savePost = async (db, post) => {
           res(resultSet)
         },
         (txObj, error) => {
-          console.log('Error', error)
           rej(error)
         }
       )

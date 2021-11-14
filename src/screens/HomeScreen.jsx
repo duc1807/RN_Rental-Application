@@ -61,8 +61,9 @@ const HomeScreen = ({ navigation }) => {
       await createPostTable(db)
 
       const _posts = await getPost(db)
-
+      console.log("Response: ", _posts);
       if (_posts?.length) {
+        
         setPosts(_posts)
         setFilteredPost(_posts)
       } else {
@@ -116,7 +117,7 @@ const HomeScreen = ({ navigation }) => {
     setAddModalShow(true)
   }
 
-  const onAddPost = async (values) => {
+  const onAddPost = async (values, resetForm) => {
     const newPost = {
       type: categories.find((item) => item._id === selectedType).name,
       furnitureType: furnitureTypes.find(
@@ -127,17 +128,17 @@ const HomeScreen = ({ navigation }) => {
     try {
       const db = await getDBConnection()
       const addedPost = await savePost(db, newPost)
+      resetForm()
       navigation.navigate('PostDetail', {
         postId: addedPost.insertId,
         index: addedPost.insertId,
       })
     } catch (err) {
-      console.log('ERR: ', err)
+      throw new Error("Error when add new post")
     } finally {
       loadDataCallback()
       setAddModalShow(false)
     }
-    console.log('New: ', newPost)
   }
 
   return (
@@ -166,14 +167,11 @@ const HomeScreen = ({ navigation }) => {
             reporter: '',
           }}
           onSubmit={(values, { resetForm }) => {
-            onAddPost(values)
-            resetForm()
+            onAddPost(values, resetForm)
           }}
-          on
         >
           {({
             handleChange,
-            handleBlur,
             handleSubmit,
             values,
             errors,
@@ -204,7 +202,6 @@ const HomeScreen = ({ navigation }) => {
                       maxLength={2}
                       style={[styles.textInput]}
                       onChangeText={handleChange('bedroom')}
-                      onBlur={handleBlur('bedroom')}
                       value={values.bedroom.toString()}
                     />
                     {errors.bedroom && (
@@ -224,7 +221,6 @@ const HomeScreen = ({ navigation }) => {
                         placeholder="Rent price"
                         style={styles.inputArea}
                         onChangeText={handleChange('rentPrice')}
-                        // onBlur={handleBlur('password')}
                         value={values.rentPrice.toString()}
                       />
                       <Text style={styles.prefix}>$</Text>
@@ -236,21 +232,6 @@ const HomeScreen = ({ navigation }) => {
                     )}
                   </View>
                 </View>
-
-                {/* <Text style={[styles.label, { marginTop: 5 }]}>Furniture</Text>
-                <TextInput
-                  name="furnitureType"
-                  placeholder="Furniture type"
-                  style={styles.textInput}
-                  onChangeText={handleChange('furnitureType')}
-                  // onBlur={handleBlur('password')}
-                  value={values.furnitureType}
-                />
-                {errors.furnitureType && (
-                  <Text style={{ fontSize: 10, color: 'red' }}>
-                    {errors.furnitureType}
-                  </Text>
-                )} */}
 
                 <TouchableOpacity onPress={() => setFurnitureModalShow(true)}>
                   <Text style={[styles.label, { marginTop: 5 }]}>
@@ -276,7 +257,6 @@ const HomeScreen = ({ navigation }) => {
                   placeholder="DD-MM-YYYY"
                   style={styles.textInput}
                   onChangeText={handleChange('createdAt')}
-                  // onBlur={handleBlur('password')}
                   value={values.createdAt}
                 />
                 {errors.createdAt && (
@@ -291,7 +271,6 @@ const HomeScreen = ({ navigation }) => {
                   placeholder="Notes"
                   style={styles.textInput}
                   onChangeText={handleChange('notes')}
-                  // onBlur={handleBlur('password')}
                   value={values.notes}
                 />
 
@@ -301,7 +280,6 @@ const HomeScreen = ({ navigation }) => {
                   placeholder="Reportner name"
                   style={styles.textInput}
                   onChangeText={handleChange('reporter')}
-                  // onBlur={handleBlur('password')}
                   value={values.reporter}
                 />
                 {errors.reporter && (
