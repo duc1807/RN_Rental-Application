@@ -61,7 +61,7 @@ const HomeScreen = ({ navigation }) => {
       await createPostTable(db)
 
       const _posts = await getPost(db)
-      console.log("Response: ", _posts);
+
       if (_posts?.length) {
         
         setPosts(_posts)
@@ -363,7 +363,7 @@ const HomeScreen = ({ navigation }) => {
             containerStyle={{ backgroundColor: 'white' }}
             inputContainerStyle={{ backgroundColor: '#f0f0f0' }}
             lightTheme="true"
-            placeholder="Type Here..."
+            placeholder="Search for apartment type"
             onChangeText={onChangeSearch}
             value={searchKey}
           />

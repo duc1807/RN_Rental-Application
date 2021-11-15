@@ -24,7 +24,6 @@ function HomeStackScreen() {
 
 const BotTabNavigation = () => {
   return (
-    <NavigationContainer>
       <Tab.Navigator
         screenOptions={({ route }) => ({
           activeTintColor: 'tomato',
@@ -51,7 +50,6 @@ const BotTabNavigation = () => {
         />
         <Tab.Screen name="Category" component={Category} />
       </Tab.Navigator>
-    </NavigationContainer>
   )
 }
 

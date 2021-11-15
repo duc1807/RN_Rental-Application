@@ -19,9 +19,23 @@ export const addApartmentValidator = yup.object().shape({
     .min(1, ({ min }) => `Rent price must be at least ${min}`)
     .typeError('Number only')
     .required('Rent price is required'),
-  reporter: yup.string().required('Reporter is Required'),
+  reporter: yup.string().required('Reporter is required'),
 })
 
 export const addCategoryValidator = yup.object().shape({
-  name: yup.string().required('Category name is Required'),
+  name: yup.string().required('Category name is required'),
+})
+
+export const loginValidator = yup.object().shape({
+  username: yup
+    .string()
+    .required('Username is required')
+    .matches(/^[a-z0-9_-]{3,16}$/, 'Invalid username'),
+  password: yup
+    .string()
+    .required('Password is required')
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+      'Invalid password'
+    ),
 })
