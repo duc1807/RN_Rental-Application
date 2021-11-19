@@ -27,6 +27,7 @@ const CategoryCard = ({ category, loadDataCallback }) => {
   const [categoryName, setCategoryName] = useState(category.name || '')
 
   const toastRef = useRef()
+  const successToast = useRef()
 
   const onDeleteCategory = async () => {
     try {
@@ -44,12 +45,22 @@ const CategoryCard = ({ category, loadDataCallback }) => {
     setCategoryName(value)
   }
 
+  const resetForm = () => {
+    setEditModalShow(false)
+    setCategoryName(category.name)
+  }
+
   const onUpdateCategory = async () => {
+    if (categoryName === category.name) {
+      setEditModalShow(false)
+      return
+    }
+
     const db = await getDBConnection()
 
     const duplicatedCategory = await getCategoryByName(db, categoryName)
-    if (duplicatedCategory?.length) {
-      toastRef.current.show('This category has existed.', {
+    if (duplicatedCategory.length) {
+      toastRef.current.show('This category has existed', {
         type: 'danger',
         placement: 'top',
       })
@@ -58,6 +69,10 @@ const CategoryCard = ({ category, loadDataCallback }) => {
 
     try {
       await updateCategory(db, category._id, categoryName)
+      successToast.current.show('Category updated successful', {
+        type: 'success',
+        placement: 'top',
+      })
     } catch (error) {
       console.error(error)
     } finally {
@@ -68,8 +83,14 @@ const CategoryCard = ({ category, loadDataCallback }) => {
 
   return (
     <View style={styles.categoryCard}>
+      <Toast
+          style={{ zIndex: 100, position: 'absolute', top: -200 }}
+          ref={successToast}
+        />
       <View style={styles.cardLeft}>
-        <Text style={styles.categoryName} numberOfLines={1}>{category?.name}</Text>
+        <Text style={styles.categoryName} numberOfLines={1}>
+          {category?.name}
+        </Text>
       </View>
       <View style={styles.cardRight}>
         <TouchableOpacity onPress={() => setEditModalShow(true)}>
@@ -93,7 +114,10 @@ const CategoryCard = ({ category, loadDataCallback }) => {
         setShow={setEditModalShow}
         title="Edit category"
       >
-        <Toast style={{ zIndex: 100 }} ref={toastRef} />
+        <Toast
+          style={{ zIndex: 100, position: 'absolute', top: -200 }}
+          ref={toastRef}
+        />
         <View style={styles.editModalContent}>
           <View style={styles.editTextContainer}>
             <TextInput
@@ -105,7 +129,7 @@ const CategoryCard = ({ category, loadDataCallback }) => {
           <View style={styles.modalButtonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.buttonCancel]}
-              onPress={() => setEditModalShow(false)}
+              onPress={() => resetForm()}
             >
               <Text style={(styles.textStyle, { color: 'black' })}>Cancel</Text>
             </TouchableOpacity>
@@ -129,8 +153,6 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: 'white',
     marginTop: 10,
-    paddingLeft: 20,
-    paddingRight: 10,
     paddingVertical: 10,
     display: 'flex',
     flexDirection: 'row',
@@ -140,6 +162,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    paddingLeft: 20,
   },
   categoryName: {
     fontSize: 18,
@@ -152,6 +175,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+    paddingRight: 10,
   },
   editModalContent: {
     height: 120,
@@ -183,7 +207,7 @@ const styles = StyleSheet.create({
     marginRight: 15,
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: '#bababa'
+    borderColor: '#bababa',
   },
   button: {
     width: 90,
@@ -192,7 +216,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textInput: {
     height: 40,

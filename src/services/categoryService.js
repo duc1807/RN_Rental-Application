@@ -40,10 +40,9 @@ export const getCategoryByName = (db, categoryName) => {
         WHERE name = '${categoryName}'`,
         null,
         (txObj, { rows: { _array } }) => {
-          console.log('ARRA: ', _array)
           res(_array)
         },
-        (txObj, error) => console.log('Error get category name ', error)
+        (txObj, error) => rej('Error get category name')
       )
     })
   })

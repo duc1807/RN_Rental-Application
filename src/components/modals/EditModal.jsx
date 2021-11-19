@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   View,
   Keyboard,
+  ScrollView,
 } from 'react-native'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
@@ -26,19 +27,30 @@ const EditModal = ({
         transparent={true}
         animationType="fade"
         visible={isShow}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.')
-        }}
       >
-        <KeyboardAvoidingView behavior={'padding'} style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.header}>
-              <Text style={styles.modalTitle}>{title}</Text>
+        <KeyboardAvoidingView
+          behavior={'position'}
+          keyboardVerticalOffset={-62}
+          style={styles.centeredView}
+        >
+          <ScrollView
+            style={styles.scrollView}
+            scrollEnabled={false}
+            contentContainerStyle={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <View style={styles.modalView}>
+              <View style={styles.header}>
+                <Text style={styles.modalTitle}>{title}</Text>
+              </View>
+              <View style={styles.modalContentContainer}>
+                <View style={modalContentStyle}>{children}</View>
+              </View>
             </View>
-            <View style={styles.modalContentContainer}>
-              <View style={modalContentStyle}>{children}</View>
-            </View>
-          </View>
+          </ScrollView>
         </KeyboardAvoidingView>
       </Modal>
     </View>
@@ -49,14 +61,18 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 22,
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(0,0,0,0.5)',
+    overflow: 'hidden',
+  },
+  scrollView: {
+    width: '100%',
+    height: '100%',
+    paddingHorizontal: 40,
   },
   modalView: {
-    margin: 20,
     backgroundColor: 'white',
     borderRadius: 6,
     padding: 20,
@@ -65,7 +81,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    width: '80%',
+    width: '100%',
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,

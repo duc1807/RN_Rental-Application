@@ -81,7 +81,7 @@ const Category = ({ navigation }) => {
 
     const duplicatedCategory = await getCategoryByName(db, values.name)
     if (duplicatedCategory?.length) {
-      toastRef.current.show('This category has existed.', {
+      toastRef.current.show('This category has existed', {
         type: 'danger',
         placement: 'top',
       })
@@ -159,7 +159,7 @@ const Category = ({ navigation }) => {
           )}
         </Formik>
 
-        <Toast style={{ zIndex: 100 }} ref={toastRef} />
+        <Toast style={{ zIndex: 100, position: 'absolute', top: -200 }} ref={toastRef} />
       </PopupModal>
 
       <SafeAreaView style={styles.content}>

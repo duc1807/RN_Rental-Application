@@ -135,7 +135,7 @@ const PostDetail = ({ route, navigation }) => {
             <View style={styles.infoWithIconContainer}>
               <Ionicons
                 style={styles.icon}
-                name="ios-bed"
+                name="bed-outline"
                 size={16}
                 color="black"
               />
@@ -164,7 +164,7 @@ const PostDetail = ({ route, navigation }) => {
       </View>
 
       <View style={styles.notesContainer}>
-        <Text style={{ marginTop:15, fontWeight: '600', fontSize: 17 }}>
+        <Text style={{ marginTop: 15, fontWeight: '600', fontSize: 17 }}>
           Notes
         </Text>
         <SafeAreaView style={{ height: 120 }}>
@@ -433,7 +433,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   scrollView: {
-    marginTop: 10
+    marginTop: 10,
   },
   notesArea: {
     width: '100%',
