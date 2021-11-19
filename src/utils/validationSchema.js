@@ -31,11 +31,9 @@ export const loginValidator = yup.object().shape({
     .string()
     .required('Username is required')
     .matches(/^[a-z0-9_-]{3,16}$/, 'Invalid username'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .matches(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-      'Invalid password'
-    ),
+  password: yup.string().required('Password is required'),
+  // .matches(
+  //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+  //   'Invalid password'
+  // ),
 })

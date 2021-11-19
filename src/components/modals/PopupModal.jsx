@@ -9,7 +9,6 @@ import {
   View,
   Keyboard,
 } from 'react-native'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 const PopupModal = ({
   isShow,
@@ -53,6 +52,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: 'rgba(0,0,0,0.5)',
+    overflow: 'hidden'
   },
   modalView: {
     margin: 20,

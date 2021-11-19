@@ -145,8 +145,8 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     width: 240,
-    borderRadius: 25,
-    height: 48,
+    borderRadius: 4,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 40,
@@ -154,5 +154,6 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: 'white',
+    fontWeight: '600'
   },
 })

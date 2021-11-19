@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  SafeAreaView,
 } from 'react-native'
 import 'react-native-gesture-handler'
 import ConfirmModal from '../components/modals/ConfirmModal'
@@ -19,6 +20,7 @@ import { createCategoryTable, getCategory } from '../services/categoryService'
 import { Picker } from '@react-native-picker/picker'
 import { furnitureTypes } from './HomeScreen'
 import SlideupModal from '../components/modals/SlideupModal'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const PostDetail = ({ route, navigation }) => {
   const { postId, index } = route.params
@@ -162,10 +164,14 @@ const PostDetail = ({ route, navigation }) => {
       </View>
 
       <View style={styles.notesContainer}>
-        <Text style={{ marginTop: 20, fontWeight: '600', fontSize: 17 }}>
+        <Text style={{ marginTop:15, fontWeight: '600', fontSize: 17 }}>
           Notes
         </Text>
-        <Text style={styles.notesArea}>{post?.notes || 'None'}</Text>
+        <SafeAreaView style={{ height: 120 }}>
+          <ScrollView style={styles.scrollView}>
+            <Text style={styles.notesArea}>{post?.notes || 'None'}</Text>
+          </ScrollView>
+        </SafeAreaView>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -419,17 +425,20 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   imageContainer: {
-    flex: 3.5,
+    flex: 3,
     width: '100%',
   },
   image: {
     width: '100%',
     height: '100%',
   },
+  scrollView: {
+    marginTop: 10
+  },
   notesArea: {
     width: '100%',
-    height: 80,
-    marginTop: 10,
+    flex: 1,
+    flexWrap: 'wrap',
   },
   editButton: {
     backgroundColor: 'white',
@@ -438,7 +447,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderWidth: 1,
     borderColor: 'lightgrey',
-    width: 80,
+    width: 120,
+    height: 40,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -451,8 +461,8 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderWidth: 1,
     borderColor: 'lightgrey',
-    width: 80,
-
+    width: 120,
+    height: 40,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -466,7 +476,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   apartmentNameContainer: {
-    flex: 1,
+    flex: 0.8,
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
@@ -487,7 +497,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   notesContainer: {
-    flex: 2.5,
+    flex: 3.2,
     paddingHorizontal: 15,
     width: '100%',
     display: 'flex',
@@ -580,7 +590,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   buttonClose: {
     backgroundColor: '#2196F3',
@@ -589,21 +599,23 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 100,
-    backgroundColor: '#1c6efc',
+    backgroundColor: '#6e5096',
   },
   buttonCancel: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 100,
-    marginRight: 20,
-    backgroundColor: '#cccac6',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#bababa',
   },
   button: {
+    width: 120,
+    height: 40,
     borderRadius: 100,
     padding: 10,
     elevation: 2,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textStyle: {
     color: 'white',

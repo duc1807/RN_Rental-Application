@@ -26,6 +26,8 @@ import PostCard from '../components/PostCard'
 import { useIsFocused } from '@react-navigation/native'
 import PopupModal from '../components/modals/PopupModal'
 import SlideupModal from '../components/modals/SlideupModal'
+import { StackActions } from '@react-navigation/native';
+
 
 export const furnitureTypes = [
   {
@@ -50,6 +52,25 @@ const HomeScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([])
   const [filteredPost, setFilteredPost] = useState([])
 
+  const logout = () => {
+    navigation.dispatch(
+      StackActions.pop()
+    );
+  }
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ marginRight: 15 }}
+          onPress={() => logout()}
+        >
+          <Text style={{ fontWeight: '600', fontSize: 15 , color: 'red'}}>Logout</Text>
+        </TouchableOpacity>
+      ),
+    })
+  }, [navigation])
+
   const isFocused = useIsFocused()
 
   const loadDataCallback = useCallback(async () => {
@@ -63,7 +84,6 @@ const HomeScreen = ({ navigation }) => {
       const _posts = await getPost(db)
 
       if (_posts?.length) {
-        
         setPosts(_posts)
         setFilteredPost(_posts)
       } else {
@@ -134,7 +154,7 @@ const HomeScreen = ({ navigation }) => {
         index: addedPost.insertId,
       })
     } catch (err) {
-      throw new Error("Error when add new post")
+      throw new Error('Error when add new post')
     } finally {
       loadDataCallback()
       setAddModalShow(false)
@@ -360,7 +380,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.headerContainer}>
         <View style={styles.headerLeft}>
           <SearchBar
-            containerStyle={{ backgroundColor: 'white' }}
+            containerStyle={{ backgroundColor: 'white', height: 62 }}
             inputContainerStyle={{ backgroundColor: '#f0f0f0' }}
             lightTheme="true"
             placeholder="Search for apartment type"
@@ -409,7 +429,6 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: 'green',
   },
   headerLeft: {
     flex: 4,
@@ -422,12 +441,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
+    height: 61.5,
+    borderBottomWidth: 1,
+    borderColor: '#e3e3e3',
   },
   contentContainer: {
     width: '100%',
     height: '100%',
     flex: 8,
-    paddingHorizontal: 10,
+    paddingLeft: 10,
+    paddingRight: 1,
+    marginTop: 1.5,
   },
   content: {
     height: '100%',
@@ -439,33 +463,38 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 50,
-    height: 50,
-    backgroundColor: '#1c6efc',
+    width: 45,
+    height: 45,
+    backgroundColor: '#6e5096',
   },
   buttonSave: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 70,
-    backgroundColor: '#1c6efc',
+    backgroundColor: '#6e5096',
   },
   buttonCancel: {
-    width: 70,
-    marginRight: 10,
-    backgroundColor: '#cccac6',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#bababa',
   },
   button: {
+    width: 120,
+    height: 40,
     borderRadius: 100,
     padding: 10,
     elevation: 2,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalButtonContainer: {
     marginTop: 15,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   buttonClose: {
     backgroundColor: '#2196F3',

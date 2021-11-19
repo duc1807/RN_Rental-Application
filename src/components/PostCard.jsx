@@ -18,7 +18,7 @@ const PostCard = ({ post, index, navigation }) => {
         <Image
           style={styles.image}
           source={{
-            uri: 'https://www.xlcncm.com/images/products/vertical-honing.jpg',
+            uri: 'https://www.ttemarket.com/wp-content/uploads/2019/03/FREEPORT.-Newly-built-3-bedrooms.jpg',
           }}
         />
       </View>
@@ -43,7 +43,7 @@ const PostCard = ({ post, index, navigation }) => {
             <View style={styles.infoWithIconContainer}>
               <Ionicons
                 style={styles.icon}
-                name="ios-bed"
+                name="bed-outline"
                 size={16}
                 color="black"
               />
@@ -77,7 +77,7 @@ const PostCard = ({ post, index, navigation }) => {
 
 const styles = StyleSheet.create({
   postCard: {
-    width: '100%',
+    width: '97.5%',
     borderRadius: 4,
     height: 120,
     marginTop: 10,
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+    borderRadius: 4,
   },
   leftContent: {
     flex: 0.7,

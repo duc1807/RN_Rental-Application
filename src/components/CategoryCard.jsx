@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import React, { useEffect, useRef, useState } from 'react'
 import {
   Text,
@@ -69,14 +69,14 @@ const CategoryCard = ({ category, loadDataCallback }) => {
   return (
     <View style={styles.categoryCard}>
       <View style={styles.cardLeft}>
-        <Text style={styles.categoryName}>{category?.name}</Text>
+        <Text style={styles.categoryName} numberOfLines={1}>{category?.name}</Text>
       </View>
       <View style={styles.cardRight}>
         <TouchableOpacity onPress={() => setEditModalShow(true)}>
-          <Ionicons name="md-pencil-sharp" size={24} color="grey" />
+          <MaterialCommunityIcons name="pencil" size={25} color="grey" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setDeleteModalShow(true)}>
-          <Ionicons name="ios-trash-sharp" size={24} color="red" />
+          <Ionicons name="ios-trash-sharp" size={25} color="red" />
         </TouchableOpacity>
       </View>
 
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
   categoryName: {
     fontSize: 18,
     fontWeight: '600',
+    width: '94%',
   },
   cardRight: {
     flex: 3,
@@ -176,18 +177,22 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 70,
-    backgroundColor: 'blue',
+    backgroundColor: '#6e5096',
   },
   buttonCancel: {
-    width: 70,
-    marginRight: 10,
-    backgroundColor: '#cccac6',
+    marginRight: 15,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#bababa'
   },
   button: {
+    width: 90,
     borderRadius: 100,
     padding: 10,
     elevation: 2,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   textInput: {
     height: 40,

@@ -9,6 +9,9 @@ import { createStackNavigator } from '@react-navigation/stack'
 import HomeScreen from '../screens/HomeScreen'
 import Category from '../screens/Category'
 import PostDetail from '../screens/PostDetail'
+import { Button } from 'react-native-elements/dist/buttons/Button'
+import { Text } from 'react-native-elements'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const Tab = createBottomTabNavigator()
 const HomeStack = createStackNavigator()
@@ -16,7 +19,7 @@ const HomeStack = createStackNavigator()
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="Home" component={HomeScreen} options={{headerLeft: null}}/>
       <HomeStack.Screen name="PostDetail" component={PostDetail} />
     </HomeStack.Navigator>
   )
@@ -24,32 +27,36 @@ function HomeStackScreen() {
 
 const BotTabNavigation = () => {
   return (
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        activeTintColor: '#6e5096',
+        tabBarActiveTintColor: '#6e5096',
+        inactiveTintColor: '#bababa',
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName
 
-            if (route.name === 'HomeScreen') {
-              iconName = 'home'
-            } else if (route.name === 'All') {
-              iconName = 'md-add-circle'
-            } else if (route.name === 'Category') {
-              iconName = 'list-outline'
-            }
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />
-          },
-        })}
-      >
-        <Tab.Screen
-          options={{ headerShown: false }}
-          name="HomeScreen"
-          component={HomeStackScreen}
-        />
-        <Tab.Screen name="Category" component={Category} />
-      </Tab.Navigator>
+          if (route.name === 'HomeScreen') {
+            iconName = 'home'
+          } else if (route.name === 'All') {
+            iconName = 'md-add-circle'
+          } else if (route.name === 'Category') {
+            iconName = 'list-outline'
+          }
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={focused ? '#6e5096' : '#bababa'} />
+        },
+      })}
+    >
+      <Tab.Screen
+        options={{ headerShown: false }}
+        name="HomeScreen"
+        component={HomeStackScreen}
+      />
+      <Tab.Screen
+        name="Category"
+        component={Category}
+      />
+    </Tab.Navigator>
   )
 }
 

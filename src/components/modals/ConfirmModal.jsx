@@ -31,7 +31,7 @@ const ConfirmModal = ({ isShow, setShow, content, onOk, okCancel, title }) => {
             </View>
 
             <View style={styles.modalContent}>
-              <Text>{content}</Text>
+              <Text style={{textAlign: 'center'}}>{content}</Text>
             </View>
 
             <View style={styles.modalButtonContainer}>
@@ -91,14 +91,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center'
   },
   modalButtonContainer: {
     flex: 1,
     display: 'flex',
     flexDirection: 'row',
+    paddingTop: 15,
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     height: 40,
@@ -124,18 +126,24 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 70,
     backgroundColor: 'red',
   },
   buttonCancel: {
-    width: 70,
-    marginRight: 10,
-    backgroundColor: '#cccac6',
+    marginRight: 15,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#bababa'
   },
   button: {
+    width: 100,
+    height: 38,
     borderRadius: 100,
     padding: 10,
     elevation: 2,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 })
 

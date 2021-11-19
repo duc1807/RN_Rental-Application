@@ -27,10 +27,23 @@ import { getDBConnection } from '../services/dbService'
 import Toast from 'react-native-toast-notifications'
 import PopupModal from '../components/modals/PopupModal'
 
-const Category = () => {
+const Category = ({ navigation }) => {
   const [addModalShow, setAddModalShow] = useState(false)
   const [categories, setCategories] = useState([])
   const [errorMsg, setErrorMsg] = useState('')
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ marginRight: 15 }}
+          onPress={() => setAddModalShow(true)}
+        >
+          <Text style={{ fontWeight: '600', fontSize: 15 , color: '#507fde'}}>Add</Text>
+        </TouchableOpacity>
+      ),
+    })
+  }, [navigation])
 
   const toastRef = useRef()
 
@@ -158,14 +171,14 @@ const Category = () => {
       </SafeAreaView>
 
       {/** Action button */}
-      <View style={{ position: 'absolute', bottom: 15, right: 20 }}>
+      {/* <View style={{ position: 'absolute', bottom: 15, right: 20 }}>
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => setAddModalShow(true)}
         >
           <Ionicons name="add-sharp" size={26} color="white" />
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   )
 }
@@ -217,18 +230,24 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 70,
-    backgroundColor: '#1c6efc',
+    backgroundColor: '#6e5096',
   },
   buttonCancel: {
-    width: 70,
-    marginRight: 20,
-    backgroundColor: '#cccac6',
+    marginRight: 15,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#bababa',
   },
   button: {
+    width: 90,
+    height: 38,
     borderRadius: 100,
     padding: 10,
     elevation: 2,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textStyle: {
     color: 'white',
